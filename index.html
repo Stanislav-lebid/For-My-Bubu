@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #fff0f5;
+            background-color: #fff0f5; /* Ніжно-рожевий фон */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
@@ -21,30 +21,76 @@
         h1 {
             color: #d6336c;
             margin-bottom: 5px;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+            padding: 0 15px;
         }
         p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 25px;
             color: #666;
+            padding: 0 15px;
         }
-        .image-container {
+        
+        /* Контейнер для відео, що адаптується під різні екрани */
+        .video-wrapper {
             background: white;
             padding: 15px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(214, 51, 108, 0.2);
-            max-width: 90%;
+            width: 90%;
+            max-width: 600px; /* Максимальна ширина для ноутів */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        img {
+
+        /* Само відео */
+        video {
             border-radius: 12px;
-            max-width: 100%;
+            width: 100%;
             height: auto;
+            background-color: #f8f9fa; /* Фон на випадок, якщо відео довго вантажиться */
+            pointer-events: none; /* Забороняємо клікати на саме відео, щоб не вилізли стандартні контролси на телефонах */
         }
+
+        /* Кастомна кнопка керування */
+        .custom-controls {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        #playBtn {
+            background-color: #d6336c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 10px rgba(214, 51, 108, 0.3);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+
+        #playBtn:hover {
+            background-color: #c2275b;
+        }
+
+        #playBtn:active {
+            transform: scale(0.95);
+        }
+
         .emojis {
             font-size: 2.5rem;
             margin-top: 25px;
             animation: bounce 2s infinite;
         }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-15px); }
@@ -57,19 +103,40 @@
     <h1>Для моєї коханої Пандочки! 🐼</h1>
     <p>Дуду має для тебе щось особливе... ❤️</p>
 
-    <div class="image-container">
-        <img src="clean_story.png" alt="Love story of Dudu and Bubu">
+    <div class="video-wrapper">
+        <video id="loveVideo" playsinline preload="metadata">
+            <source src="video.mp4" type="video/mp4">
+            Твій браузер не підтримує відео.
+        </video>
+        
+        <div class="custom-controls">
+            <button id="playBtn">▶️ Дивитися</button>
+        </div>
     </div>
 
-    <div class="emojis">🐻💖🐱</div>
+    <div class="emojis">🐻💖🐼</div>
 
+    <script>
+        const video = document.getElementById('loveVideo');
+        const playBtn = document.getElementById('playBtn');
+
+        // Логіка нашої кастомної кнопки
+        playBtn.addEventListener('click', function() {
+            if (video.paused || video.ended) {
+                // Якщо на паузі або закінчилось - вмикаємо
+                video.play();
+                playBtn.innerHTML = '⏸️ Пауза';
+            } else {
+                // Якщо грає - ставимо на паузу
+                video.pause();
+                playBtn.innerHTML = '▶️ Продовжити';
+            }
+        });
+
+        // Коли відео доходить до кінця, змінюємо текст кнопки
+        video.addEventListener('ended', function() {
+            playBtn.innerHTML = '🔄 Повторити';
+        });
+    </script>
 </body>
 </html>
-```Звісно! Я прибрав весь текст, що рухався, і тепер це виглядає як чиста анімована історія кохання. Оскільки це набір кадрів, ви можете завантажити їх як окремі зображення та використати на сайті.
-
-Ось послідовність без тексту:
-
-* **Кадр 1:** Ведмедик сидить спиною до дверей і чекає.
-* **Кадр 2:** Він повертається до вас.
-* **Кадр 3:** Підходить ближче і тримає в лапках таємну записку.
-* **Кадр 4:** Його романтичне зізнання "I Love U".
